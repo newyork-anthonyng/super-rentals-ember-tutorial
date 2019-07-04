@@ -52,4 +52,12 @@ export default function() {
       return { data: rentals };
     }
   });
+
+  this.get("/rentals/:id", function(db, request) {
+    return {
+      data: rentals.find(rental => {
+        return request.params.id === rental.id;
+      })
+    }
+  });
 }
