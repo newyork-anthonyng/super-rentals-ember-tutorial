@@ -1,20 +1,29 @@
+import Service from "@ember/service";
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import EmberObject from "@ember/object";
+
+let StubMapService = Service.extend({
+  getMapElement() {
+    return Promise.resolve(document.createElement("div"));
+  }
+})
 
 module('Integration | Component | rental-listing', function(hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function() {
-    this.rental = {
-      iamge: "fake.png",
+    this.owner.register("service:map-element", StubMapsService);
+    this.rental = EmberObject.create({
+      image: "fake.png",
       title: "test-title",
       owner: "test-owner",
       type: "test-type",
       city: "test-city",
       bedrooms: 3
-    }
+    });
   });
 
   test("should display rental details", async function(assert) {
